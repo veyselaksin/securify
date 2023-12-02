@@ -4,8 +4,7 @@ Copyright © 2023 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
-	"fmt"
-
+	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 )
 
@@ -25,7 +24,12 @@ var generateCmd = &cobra.Command{
 		- securify generate password -d 10 -s 10 -l 10 -c // will generate the password with 10 digits, 10 special characters, 10 letters and 10 capital letters
 	`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("generate called")
+		if len(args) == 0 {
+			if err := cmd.Help(); err != nil {
+				color.Red("Error while printing the help")
+			}
+			return
+		}
 	},
 }
 

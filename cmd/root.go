@@ -12,7 +12,7 @@ import (
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "securify",
-	Short: "New generation of password manager",
+	Short: "Generate a new password with a simple command line interface",
 	Long: `
 		┌──────────────────────────────────────────────────────────┐
 		│                                                          │
@@ -24,11 +24,10 @@ var rootCmd = &cobra.Command{
 		│                                               |___/      │
 		│                                                          │
 		└──────────────────────────────────────────────────────────┘
-
-		New generation of password manager
+		Version: 0.0.1
+		Author:  Veysel Aksin
 
 		Create a new password with a simple command line interface
-		Store your password in a secure way
 
 		Usage:
 		securify [command] [flags] [arguments]
