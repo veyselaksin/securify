@@ -43,47 +43,66 @@ var passwordCmd = &cobra.Command{
 		// TODO: Print the password
 
 		// Check the flags passed in the command line,so if the flag written as --digits or -d then it will be true otherwise false
-		setFlagsStatus(cmd)
+		flagCount := cmd.Flags().NFlag()
 
-		charset := getCharSet()
-		buffer := make([]byte, *passwordLength)
-		_, err := rand.Read(buffer)
+		if flagCount != 0 {
+			if !isFlagPassed(cmd, "digits") {
+				setFlagValue(cmd, "digits", false)
+			}
+			if !isFlagPassed(cmd, "special-characters") {
+				setFlagValue(cmd, "special-characters", false)
+			}
+			if !isFlagPassed(cmd, "letters") {
+				setFlagValue(cmd, "letters", false)
+			}
+			if !isFlagPassed(cmd, "capital-letters") {
+				setFlagValue(cmd, "capital-letters", false)
+			}
+
+			// if only length flag is passed then set the default values for the flags
+			if isFlagPassed(cmd, "length") && !isFlagPassed(cmd, "digits") && !isFlagPassed(cmd, "special-characters") && !isFlagPassed(cmd, "letters") && !isFlagPassed(cmd, "capital-letters") {
+				setFlagValue(cmd, "digits", true)
+				setFlagValue(cmd, "special-characters", true)
+				setFlagValue(cmd, "letters", true)
+				setFlagValue(cmd, "capital-letters", true)
+			}
+
+		}
+
+		password, err := generatePassword()
 		if err != nil {
 			color.Red("Error while generating the password")
 			return
 		}
-
-		charsetLength := len(charset)
-		for i := 0; i < *passwordLength; i++ {
-			buffer[i] = charset[int(buffer[i])%charsetLength]
-		}
-
-		color.Green("Hey buddy, your password is: %s\n", string(buffer))
+		color.Green("Hey buddy, your password is: %s\n", password)
 	},
 }
 
-func setFlagsStatus(cmd *cobra.Command) {
-
-	if !isFlagPassed(cmd, "digits") {
-		setFlagValue(cmd, "digits", false)
-	}
-	if !isFlagPassed(cmd, "special-characters") {
-		setFlagValue(cmd, "special-characters", false)
-	}
-	if !isFlagPassed(cmd, "letters") {
-		setFlagValue(cmd, "letters", false)
-	}
-	if !isFlagPassed(cmd, "capital-letters") {
-		setFlagValue(cmd, "capital-letters", false)
+func generatePassword() (string, error) {
+	if *passwordLength <= 0 {
+		color.Red("Password length should be greater than 0")
+		return "", nil
 	}
 
-	// if only length flag is passed then set the default values for the flags
-	if isFlagPassed(cmd, "length") && !isFlagPassed(cmd, "digits") && !isFlagPassed(cmd, "special-characters") && !isFlagPassed(cmd, "letters") && !isFlagPassed(cmd, "capital-letters") {
-		setFlagValue(cmd, "digits", true)
-		setFlagValue(cmd, "special-characters", true)
-		setFlagValue(cmd, "letters", true)
-		setFlagValue(cmd, "capital-letters", true)
+	if *passwordLength > 100 {
+		color.Red("Password length should be less than 100")
+		return "", nil
 	}
+
+	charset := getCharSet()
+	buffer := make([]byte, *passwordLength)
+	_, err := rand.Read(buffer)
+	if err != nil {
+		color.Red("Error while generating the password")
+		return "", err
+	}
+
+	charsetLength := len(charset)
+	for i := 0; i < *passwordLength; i++ {
+		buffer[i] = charset[int(buffer[i])%charsetLength]
+	}
+
+	return string(buffer), nil
 }
 
 func isFlagPassed(cmd *cobra.Command, flagName string) bool {
@@ -131,3 +150,18 @@ func init() {
 	// if there is no flag passed then set the default values for the flags
 
 }
+
+// if flagCount != 0 {
+// 	if !getFlagFromCmd(cmd, "digits") {
+// 		setFlagValue(cmd, "digits", false)
+// 	}
+// 	if !getFlagFromCmd(cmd, "special-characters") {
+// 		setFlagValue(cmd, "special-characters", false)
+// 	}
+// 	if !getFlagFromCmd(cmd, "letters") {
+// 		setFlagValue(cmd, "letters", false)
+// 	}
+// 	if !getFlagFromCmd(cmd, "capital-letters") {
+// 		setFlagValue(cmd, "capital-letters", false)
+// 	}
+// }
