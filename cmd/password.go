@@ -49,22 +49,22 @@ var passwordCmd = &cobra.Command{
 			if !isFlagPassed(cmd, "digits") {
 				setFlagValue(cmd, "digits", false)
 			}
-			if !isFlagPassed(cmd, "special-characters") {
-				setFlagValue(cmd, "special-characters", false)
+			if !isFlagPassed(cmd, "special") {
+				setFlagValue(cmd, "special", false)
 			}
 			if !isFlagPassed(cmd, "letters") {
 				setFlagValue(cmd, "letters", false)
 			}
-			if !isFlagPassed(cmd, "capital-letters") {
-				setFlagValue(cmd, "capital-letters", false)
+			if !isFlagPassed(cmd, "capital") {
+				setFlagValue(cmd, "capital", false)
 			}
 
 			// if only length flag is passed then set the default values for the flags
-			if isFlagPassed(cmd, "length") && !isFlagPassed(cmd, "digits") && !isFlagPassed(cmd, "special-characters") && !isFlagPassed(cmd, "letters") && !isFlagPassed(cmd, "capital-letters") {
+			if isFlagPassed(cmd, "length") && !isFlagPassed(cmd, "digits") && !isFlagPassed(cmd, "special") && !isFlagPassed(cmd, "letters") && !isFlagPassed(cmd, "capital") {
 				setFlagValue(cmd, "digits", true)
-				setFlagValue(cmd, "special-characters", true)
+				setFlagValue(cmd, "special", true)
 				setFlagValue(cmd, "letters", true)
-				setFlagValue(cmd, "capital-letters", true)
+				setFlagValue(cmd, "capital", true)
 			}
 
 		}
@@ -72,6 +72,9 @@ var passwordCmd = &cobra.Command{
 		password, err := generatePassword()
 		if err != nil {
 			color.Red("Error while generating the password")
+			return
+		}
+		if password == "" {
 			return
 		}
 		color.Green("Hey buddy, your password is: %s\n", password)
@@ -142,9 +145,9 @@ func init() {
 
 	// Here you will define your flags and configuration settings.
 	digits = passwordCmd.Flags().BoolP("digits", "d", true, "Include digits in the password")
-	specialCharacters = passwordCmd.Flags().BoolP("special-characters", "s", true, "Include special characters in the password")
+	specialCharacters = passwordCmd.Flags().BoolP("special", "s", true, "Include special characters in the password")
 	letters = passwordCmd.Flags().BoolP("letters", "l", true, "Include letters in the password")
-	capitalLetters = passwordCmd.Flags().BoolP("capital-letters", "c", true, "Include capital letters in the password")
+	capitalLetters = passwordCmd.Flags().BoolP("capital", "c", true, "Include capital letters in the password")
 	passwordLength = passwordCmd.Flags().IntP("length", "n", 16, "Length of the password")
 
 	// if there is no flag passed then set the default values for the flags
