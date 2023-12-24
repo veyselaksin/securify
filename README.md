@@ -18,8 +18,19 @@ Securify is a command-line utility for creating strong and secure passwords. It'
 
 ## Installation
 
-```bash
+You can download the latest version of Securify as a single binary for your operating system and architecture from below.
 
+| OS      | Architecture                                         |                                                   |                                                  |
+| ------- | ---------------------------------------------------- | ------------------------------------------------- | ------------------------------------------------ |
+| Linux   | [AMD](./dist/securify_linux_amd64_v1/securify)       | [ARM](./dist/securify_linux_arm64/securify)       | [i386](./dist/securify_linux_386/securify)       |
+| macOS   | [AMD](./dist/securify_darwin_amd64_v1/securify)      | [ARM](./dist/securify_darwin_arm64/securify)      |                                                  |
+| Windows | [AMD](./dist/securify_windows_amd64_v1/securify.exe) | [ARM](./dist/securify_windows_arm64/securify.exe) | [i386](./dist/securify_windows_386/securify.exe) |
+
+### Go Installation
+
+If you have Go installed, you can install Securify with the following command:
+
+```bash
 go install github.com/veyselaksin/securify@latest
 
 ```
