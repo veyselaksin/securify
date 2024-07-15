@@ -1,1 +1,1 @@
-{"project_name":"securify","tag":"v0.0.1","previous_tag":"","version":"0.0.1-SNAPSHOT-47ee02d","commit":"47ee02d2fd97c6e159792a89af2bcfb5e0bfd0e9","date":"2023-12-23T13:55:04.585050164+03:00","runtime":{"goos":"linux","goarch":"amd64"}}
+{"project_name":"securify","tag":"v0.0.2","previous_tag":"v0.0.1","version":"0.0.2-SNAPSHOT-ca4dcc3","commit":"ca4dcc369dccb5a2ed23310809d009477a1c1e9b","date":"2024-07-15T14:33:17.831989+03:00","runtime":{"goos":"darwin","goarch":"arm64"}}
