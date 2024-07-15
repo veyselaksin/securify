@@ -170,7 +170,10 @@ func init() {
 func savePasswordToFile(password string, passName string, description string) {
 	securifyDir := filepath.Join(os.Getenv("HOME"), "securify")
 	if _, err := os.Stat(securifyDir); os.IsNotExist(err) {
-		os.MkdirAll(securifyDir, 0755)
+		err := os.MkdirAll(securifyDir, 0755)
+		if err != nil {
+			return
+		}
 	}
 
 	file, err := os.OpenFile(passwordFilePath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
@@ -178,7 +181,12 @@ func savePasswordToFile(password string, passName string, description string) {
 		color.Red("Error while opening the password file")
 		return
 	}
-	defer file.Close()
+	defer func(file *os.File) {
+		err := file.Close()
+		if err != nil {
+
+		}
+	}(file)
 
 	_, err = file.WriteString(fmt.Sprintf("[%s] [%s] [%s] [%s]\n", passName, password, time.Now().Format("2006-01-02 15:04:05"), description))
 	if err != nil {
