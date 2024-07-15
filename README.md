@@ -59,9 +59,14 @@ The following options are available:
 The following examples show how to use the command:
 
 ```bash
-securify generate password // default options
-securify generate password -n 32 // 32 characters
-securify generate password -l -d -n 8 // only letters and digits with 8 characters
-securify generate password -l -d -s -n 8 // only letters, digits, and special characters with 8 characters
-securify generate password -l -d -s -c -n 8 // only letters, digits, special characters, and capital letters with 16 characters
+securify pwd // default options
+securify pwd --len 32 // 32 characters
+securify pwd -l -d --len 8 // only letters and digits with 8 characters
+securify pwd -l -d -s --len 8 // only letters, digits, and special characters with 8 characters
+securify pwd -l -d -s -u --len 8 // only letters, digits, special characters, and capital letters with 8 characters
+```
+
+The following example shows the generated password:
+```bash
+securify show
 ```
