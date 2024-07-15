@@ -35,13 +35,21 @@ var passwordCmd = &cobra.Command{
 		- securify pwd -d -s -l -u --len 20 // generates a password with digits, special characters, lowercase and uppercase letters with length 20
 `,
 	Run: func(cmd *cobra.Command, args []string) {
+		// Check if any flags are passed, otherwise use default values
+		if cmd.Flags().NFlag() == 0 {
+			setFlagValue(cmd, "digits", true)
+			setFlagValue(cmd, "special", true)
+			setFlagValue(cmd, "lower", true)
+			setFlagValue(cmd, "upper", true)
+		}
+
 		if isFlagPassed(cmd, "len") && *passwordLength <= 8 {
 			color.Red("Password length should be greater than 8")
 			return
 		}
 
 		// Check which flags are passed except the password length, name and description
-		if isFlagPassed(cmd, "len") || isFlagPassed(cmd, "name") || isFlagPassed(cmd, "desc") {
+		if isFlagPassed(cmd, "len") || isFlagPassed(cmd, "save") || isFlagPassed(cmd, "desc") {
 			if !isFlagPassed(cmd, "digits") && !isFlagPassed(cmd, "special") && !isFlagPassed(cmd, "lower") && !isFlagPassed(cmd, "upper") {
 				setFlagValue(cmd, "digits", true)
 				setFlagValue(cmd, "special", true)
